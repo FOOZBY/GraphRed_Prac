@@ -35,7 +35,7 @@ public class MyFrame  extends JFrame {
 
     public MyFrame() {
         super.setTitle("Paint 0.9");
-        super.setSize(700, 700);
+        super.setSize(1000, 800);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLocationRelativeTo(null);
         super.setLayout(new BorderLayout());
@@ -55,20 +55,20 @@ public class MyFrame  extends JFrame {
         fileMenu.add(save_as_file_item);
 
         open_file_item.addActionListener(e -> {
-            JFileChooser jf = new JFileChooser();
-            int result = jf.showOpenDialog(null);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.addChoosableFileFilter(new TextFileFilter(".png"));
+            fileChooser.addChoosableFileFilter(new TextFileFilter(".jpg"));
+            int result = fileChooser.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 try {
                     // при выборе изображения подстраиваем размеры формы
                     // и панели под размеры данного изображения
-                    fileName = jf.getSelectedFile().getAbsolutePath();
-                    File iF = new File(fileName);
-                    jf.addChoosableFileFilter(new TextFileFilter(".png"));
-                    jf.addChoosableFileFilter(new TextFileFilter(".jpg"));
-                    paint_panel.image = ImageIO.read(iF);
+                    fileName = fileChooser.getSelectedFile().getAbsolutePath();
+                    File file = new File(fileName);
+                    BufferedImage im = ImageIO.read(file);
+                    Graphics g = paint_panel.image.getGraphics();
+                    g.drawImage(im,0,0, this);
                     loading = true;
-                    super.setSize(paint_panel.image.getWidth() + 40, paint_panel.image.getWidth() + 80);
-                    paint_panel.setSize(paint_panel.image.getWidth(), paint_panel.image.getWidth());
                     paint_panel.repaint();
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(this, "Такого файла не существует");
@@ -138,20 +138,20 @@ public class MyFrame  extends JFrame {
         //////////////////////////////////////////////////////////////toolbar
         JToolBar toolbar = new JToolBar("Toolbar", JToolBar.VERTICAL);
 
-        JButton penbutton = new JButton(new ImageIcon("pencil.png"));
-        penbutton.addActionListener(event -> mode = 0);
+        JButton pencil_button = new JButton(new ImageIcon("pencil.png"));
+        pencil_button.addActionListener(event -> mode = 0);
 
-        JButton brushbutton = new JButton(new ImageIcon("brush.png"));
-        brushbutton.addActionListener(event -> mode = 1);
+        JButton brush_button = new JButton(new ImageIcon("brush.png"));
+        brush_button.addActionListener(event -> mode = 1);
 
-        JButton lasticbutton = new JButton(new ImageIcon("eraser.png"));
-        lasticbutton.addActionListener(event -> mode = 2);
+        JButton eraser_button = new JButton(new ImageIcon("eraser.png"));
+        eraser_button.addActionListener(event -> mode = 2);
 
-        JButton textbutton = new JButton(new ImageIcon("text.png"));
-        textbutton.addActionListener(event -> mode = 3);
+        JButton text_button = new JButton(new ImageIcon("text.png"));
+        text_button.addActionListener(event -> mode = 3);
 
-        JButton linebutton = new JButton(new ImageIcon("line.png"));
-        linebutton.addActionListener(event -> mode = 4);
+        JButton line_button = new JButton(new ImageIcon("line.png"));
+        line_button.addActionListener(event -> mode = 4);
 
         JButton elipse_button = new JButton(new ImageIcon("elipse.png"));
         elipse_button.addActionListener(event -> mode = 5);
@@ -161,100 +161,103 @@ public class MyFrame  extends JFrame {
 
 
         toolbar.add(elipse_button);
-        toolbar.add(linebutton);
-        toolbar.add(textbutton);
-        toolbar.add(lasticbutton);
-        toolbar.add(brushbutton);
-        toolbar.add(penbutton);
+        toolbar.add(line_button);
+        toolbar.add(text_button);
+        toolbar.add(eraser_button);
+        toolbar.add(brush_button);
+        toolbar.add(pencil_button);
         toolbar.add(rectangle_button);
         //////////////////////////////////////////////////////////////toolbar
 
 
         //////////////////////////////////////////////////////////////color toolbar
         JToolBar color_bar = new JToolBar("Color bar", JToolBar.VERTICAL);
-        color_bar.setSize(new Dimension(30,300));
+        color_bar.setPreferredSize(new Dimension(30,0));
+        color_bar.setLayout(new FlowLayout());
 
-        JButton colorbutton = new JButton();
-        colorbutton.setBackground(maincolor);
+        JButton color_button = new JButton();
+        color_button.setBackground(maincolor);
+        color_button.setPreferredSize(new Dimension(28,28));
 
-        colorbutton.addActionListener(e -> {
+        color_button.addActionListener(e -> {
             maincolor = JColorChooser.showDialog(this, "Выбор цвета", maincolor);
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
-        JButton redbutton = new JButton();
-        redbutton.setBackground(Color.red);
-        redbutton.addActionListener(e -> {
+        JButton red_button = new JButton();
+        red_button.setBackground(Color.red);
+        red_button.setPreferredSize(new Dimension(22,22));
+        red_button.addActionListener(e -> {
             maincolor = Color.red;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton orange_button = new JButton();
         orange_button.setBackground(Color.orange);
-        orange_button.setBounds(60, 5, 15, 15);
+        orange_button.setPreferredSize(new Dimension(22,22));
         orange_button.addActionListener(event -> {
             maincolor = Color.orange;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton yellow_button = new JButton();
         yellow_button.setBackground(Color.yellow);
-        yellow_button.setBounds(80, 5, 15, 15);
+        yellow_button.setPreferredSize(new Dimension(22,22));
         yellow_button.addActionListener(event -> {
             maincolor = Color.yellow;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton green_button = new JButton();
         green_button.setBackground(Color.green);
-        green_button.setBounds(100, 5, 15, 15);
+        green_button.setPreferredSize(new Dimension(22,22));
         green_button.addActionListener(event -> {
             maincolor = Color.green;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton blue_button = new JButton();
         blue_button.setBackground(Color.blue);
-        blue_button.setBounds(120, 5, 15, 15);
+        blue_button.setPreferredSize(new Dimension(22,22));
         blue_button.addActionListener(event -> {
             maincolor = Color.blue;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton cyan_button = new JButton();
         cyan_button.setBackground(Color.cyan);
-        cyan_button.setBounds(140, 5, 15, 15);
+        cyan_button.setPreferredSize(new Dimension(22,22));
         cyan_button.addActionListener(event -> {
             maincolor = Color.cyan;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton magenta_button = new JButton();
         magenta_button.setBackground(Color.magenta);
-        magenta_button.setBounds(160, 5, 15, 15);
+        magenta_button.setPreferredSize(new Dimension(22,22));
         magenta_button.addActionListener(event -> {
             maincolor = Color.magenta;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton white_button = new JButton();
         white_button.setBackground(Color.white);
-        white_button.setBounds(180, 5, 15, 15);
+        white_button.setPreferredSize(new Dimension(22,22));
         white_button.addActionListener(event -> {
             maincolor = Color.white;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
         JButton black_button = new JButton();
         black_button.setBackground(Color.black);
-        black_button.setBounds(200, 5, 15, 15);
+        black_button.setPreferredSize(new Dimension(22,22));
         black_button.addActionListener(event -> {
             maincolor = Color.black;
-            colorbutton.setBackground(maincolor);
+            color_button.setBackground(maincolor);
         });
 
-        color_bar.add(colorbutton);
-        color_bar.add(redbutton);
+        color_bar.add(color_button);
+        color_bar.add(red_button);
         color_bar.add(orange_button);
         color_bar.add(yellow_button);
         color_bar.add(green_button);
@@ -361,7 +364,7 @@ public class MyFrame  extends JFrame {
                     // линия
                     case 4:
                         g.drawLine(xf, yf, e.getX(), e.getY());
-                        System.out.println(xf + ":" + yf + " " + e.getX() + ":" + e.getY());
+                        System.out.println("#line:" + xf + ":" + yf + ";" + e.getX() + ":" + e.getY());
                         break;
                     // круг
                     case 5:
@@ -403,23 +406,6 @@ public class MyFrame  extends JFrame {
                     paint_panel.requestFocus();
                     paint_panel.repaint();
                 }
-            }
-        });
-        super.addComponentListener(new ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                // если делаем загрузку, то изменение размеров формы
-                // отрабатываем в коде загрузки
-                if (!loading) {
-                    paint_panel.setSize(MyFrame.super.getWidth() - 40, MyFrame.super.getHeight() - 80);
-                    BufferedImage tempImage = new BufferedImage(paint_panel.getWidth(), paint_panel.getHeight(), BufferedImage.TYPE_INT_RGB);
-                    Graphics2D d2 = tempImage.createGraphics();
-                    d2.setColor(Color.white);
-                    d2.fillRect(0, 0, paint_panel.getWidth(), paint_panel.getHeight());
-                    tempImage.setData(paint_panel.image.getRaster());
-                    paint_panel.image = tempImage;
-                    paint_panel.repaint();
-                }
-                loading = false;
             }
         });
 
