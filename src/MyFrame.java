@@ -144,7 +144,6 @@ public class MyFrame  extends JFrame {
         });
 
         exitMenu.addActionListener(e -> {
-            System.out.println("sdfvds");
             int choice = JOptionPane.showConfirmDialog(null, "Выйти без сохранения?", "Выход", JOptionPane.YES_NO_OPTION);
 
             if (choice == JOptionPane.YES_OPTION) {
@@ -394,7 +393,6 @@ public class MyFrame  extends JFrame {
                     // линия
                     case 4:
                         g.drawLine(xf, yf, e.getX(), e.getY());
-                        System.out.println("#line:" + xf + ":" + yf + ";" + e.getX() + ":" + e.getY());
                         break;
                     // круг
                     case 5:

@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Observer;
 
 public class Paint_panel extends JPanel {
     BufferedImage image;
@@ -45,7 +43,6 @@ public class Paint_panel extends JPanel {
         if(image == null)
         {
             image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
-            System.out.println(this.getWidth()+":"+this.getHeight());
             Graphics2D d2 = image.createGraphics();
             d2.setColor(Color.white);
             d2.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -53,7 +50,6 @@ public class Paint_panel extends JPanel {
         super.paintComponent(g);
 
         if (resizedImage != null) {
-            System.out.println("svsv");
             image = resizedImage;
         }
         g.drawImage(image, 0, 0, this);
