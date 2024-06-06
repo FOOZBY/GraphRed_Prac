@@ -34,6 +34,14 @@ public class MyFrame  extends JFrame {
 
 
     public MyFrame() {
+        //////////////////////////////////////////////////////////////paint panel
+        paint_panel = new Paint_panel();
+        paint_panel.setBackground(Color.white);
+        paint_panel.setOpaque(true);
+
+        //////////////////////////////////////////////////////////////paint panel
+
+
         super.setTitle("Paint 0.9");
         super.setSize(1000, 800);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,11 +136,7 @@ public class MyFrame  extends JFrame {
         //////////////////////////////////////////////////////////////file menu
 
 
-        //////////////////////////////////////////////////////////////paint panel
-        paint_panel = new Paint_panel();
-        paint_panel.setBackground(Color.white);
-        paint_panel.setOpaque(true);
-        //////////////////////////////////////////////////////////////paint panel
+
 
 
         //////////////////////////////////////////////////////////////toolbar
@@ -327,6 +331,11 @@ public class MyFrame  extends JFrame {
                         // устанавливаем фокус для панели,
                         // чтобы печатать на ней текст
                         paint_panel.requestFocus();
+                        String text = JOptionPane.showInputDialog(null, "Введите сообщение:");
+                        g2.setColor(maincolor);
+                        g2.drawString(text, xPad, yPad);
+                        // установка цвета
+
                         break;
                 }
                 xPad = e.getX();
@@ -387,28 +396,7 @@ public class MyFrame  extends JFrame {
                 // чтобы печатать на ней текст
                 paint_panel.requestFocus();
             }
-
-            public void keyTyped(KeyEvent e) {
-                if (mode == 3) {
-                    Graphics g = paint_panel.image.getGraphics();
-                    Graphics2D g2 = (Graphics2D) g;
-                    // установка цвета
-                    g2.setColor(maincolor);
-                    g2.setStroke(new BasicStroke(2.0f));
-
-                    String str = "";
-                    str += e.getKeyChar();
-                    g2.setFont(new Font("Arial", Font.PLAIN, 15));
-                    g2.drawString(str, xPad, yPad);
-                    xPad += 10;
-                    // устанавливаем фокус для панели,
-                    // чтобы печатать на ней текст
-                    paint_panel.requestFocus();
-                    paint_panel.repaint();
-                }
-            }
         });
-
 
         super.setJMenuBar(menuBar);
         super.add(color_bar, BorderLayout.EAST);

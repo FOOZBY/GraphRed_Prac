@@ -12,6 +12,7 @@ public class Paint_panel extends JPanel {
         if(image == null)
         {
             image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+            System.out.println(this.getWidth()+":"+this.getHeight());
             Graphics2D d2 = image.createGraphics();
             d2.setColor(Color.white);
             d2.fillRect(0, 0, this.getWidth(), this.getHeight());
