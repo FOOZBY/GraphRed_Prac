@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GraphRed_Prac:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GraphRed_Prac_jar</output-path>
+    <root id="archive" name="GraphRed_Prac.jar">
+      <element id="module-output" name="GraphRed_Prac" />
+    </root>
+  </artifact>
+</component>

@@ -39,7 +39,11 @@ public class MyFrame  extends JFrame {
         paint_panel.setBackground(Color.white);
         paint_panel.setOpaque(true);
 
+
         //////////////////////////////////////////////////////////////paint panel
+
+
+
 
 
         super.setTitle("Paint 0.9");
@@ -53,6 +57,8 @@ public class MyFrame  extends JFrame {
 
         JMenu fileMenu = new JMenu("File");
         menuBar.add(fileMenu);
+        JMenuItem exitMenu = new JMenuItem("Exit");
+        menuBar.add(fileMenu);
 
         JMenuItem open_file_item = new JMenuItem("Open");
         JMenuItem save_file_item = new JMenuItem("Save");
@@ -61,6 +67,7 @@ public class MyFrame  extends JFrame {
         fileMenu.add(open_file_item);
         fileMenu.add(save_file_item);
         fileMenu.add(save_as_file_item);
+        fileMenu.add(exitMenu);
 
         open_file_item.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
@@ -85,6 +92,7 @@ public class MyFrame  extends JFrame {
                 }
             }
         });
+
         save_file_item.addActionListener(e -> {
             try {
                 JFileChooser jf = new JFileChooser();
@@ -110,6 +118,7 @@ public class MyFrame  extends JFrame {
                 JOptionPane.showMessageDialog(this, "Ошибка ввода-вывода");
             }
         });
+
         save_as_file_item.addActionListener(e -> {
             try {
                 JFileChooser jf = new JFileChooser();
@@ -133,6 +142,18 @@ public class MyFrame  extends JFrame {
                 JOptionPane.showMessageDialog(this, "Ошибка ввода-вывода");
             }
         });
+
+        exitMenu.addActionListener(e -> {
+            System.out.println("sdfvds");
+            int choice = JOptionPane.showConfirmDialog(null, "Выйти без сохранения?", "Выход", JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+                super.dispose();
+            } else if (choice == JOptionPane.NO_OPTION) {
+                save_as_file_item.doClick();
+            }
+        });
+
         //////////////////////////////////////////////////////////////file menu
 
 
